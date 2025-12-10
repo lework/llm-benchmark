@@ -38,6 +38,11 @@ llm-benchmark/
 
 ## 使用方法
 
+安装依赖
+```bash
+pip install -r requirements.txt
+```
+
 运行全套性能测试：
 
 ```bash
@@ -82,7 +87,7 @@ mkdir -p $PWD/output
 
 运行全套性能测试
 ```bash
-podman run -it --rm -v $PWD/output:/app/output llm-benchmark \
+docker run -it --rm -v $PWD/output:/app/output llm-benchmark \
 python run_benchmarks.py \
   --llm_url "http://your-llm-server" \
   --api_key "your-api-key" \
@@ -92,7 +97,7 @@ python run_benchmarks.py \
 
 运行单次并发测试
 ```bash
-podman run -it --rm -v $PWD/output:/app/output llm-benchmark \
+docker run -it --rm -v $PWD/output:/app/output llm-benchmark \
 python llm_benchmark.py \
   --llm_url "http://your-llm-server" \
   --api_key "your-api-key" \
