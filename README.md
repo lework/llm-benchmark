@@ -59,6 +59,48 @@ python llm_benchmark.py \
     --concurrency 10
 ```
 
+## docker方式运行
+构建镜像
+```bash
+docker build -t llm-benchmark .
+```
+
+如果不想构建，可直接拉取已存在的镜像
+```bash
+# 拉取镜像
+docker pull samge/llm-benchmark
+
+# 镜像重命名
+docker tag samge/llm-benchmark llm-benchmark
+```
+
+
+创建输出目录 - 保存测试报告
+```bash
+mkdir -p $PWD/output
+```
+
+运行全套性能测试
+```bash
+podman run -it --rm -v $PWD/output:/app/output llm-benchmark \
+python run_benchmarks.py \
+  --llm_url "http://your-llm-server" \
+  --api_key "your-api-key" \
+  --model "your-model-name" \
+  --use_long_context
+```
+
+运行单次并发测试
+```bash
+podman run -it --rm -v $PWD/output:/app/output llm-benchmark \
+python llm_benchmark.py \
+  --llm_url "http://your-llm-server" \
+  --api_key "your-api-key" \
+  --model "your-model-name" \
+  --num_requests 100 \
+  --concurrency 10
+```
+
 ### 命令行参数
 
 #### run_benchmarks.py 参数

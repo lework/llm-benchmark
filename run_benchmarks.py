@@ -1,7 +1,9 @@
+import os
 import asyncio
 import json
 import time
 import argparse
+from datetime import datetime
 from llm_benchmark import run_benchmark
 import numpy as np
 from rich.console import Console
@@ -198,9 +200,16 @@ def main():
     all_results = asyncio.run(run_all_benchmarks(args.llm_url, args.api_key, args.model, args.use_long_context))
 
     # 保存详细结果到文件
-    with open('benchmark_results.json', 'w') as f:
+    output_dir = f"{os.path.dirname(__file__)}{os.sep}output"
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # 生成带时间戳的文件名
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_file = f"{output_dir}{os.sep}benchmark_results_{timestamp}.json"
+    
+    with open(output_file, 'w') as f:
         json.dump(all_results, f, indent=2)
-    print("详细测试结果已保存至 benchmark_results.json")
+    print(f"详细测试结果已保存至 {output_file}")
     
     # 打印汇总报告
     print_summary(all_results, args.model, args.use_long_context)
