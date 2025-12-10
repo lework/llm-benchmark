@@ -173,3 +173,5 @@ cython_debug/
 # custom
 output/
 benchmark_result*.json
+assets/
+.github/
